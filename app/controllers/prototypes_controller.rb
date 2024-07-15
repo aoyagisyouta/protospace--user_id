@@ -16,7 +16,7 @@ class PrototypesController < ApplicationController
     if @prototype.save 
       redirect_to "/"
     else 
-      render :new 
+      render :new, status: :unprocessable_entity
     end 
   end 
 
@@ -35,14 +35,14 @@ class PrototypesController < ApplicationController
     if @prototype.update(prototype_params)
       redirect_to prototype_path(@prototype)
     else 
-      render :edit 
+      render :edit,status: :unprocessable_entity
     end
-
+  end
   def destroy 
     @prototype.destroy
     redirect_to '/'
   end
-  end
+  
   private
   def prototype_params 
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
